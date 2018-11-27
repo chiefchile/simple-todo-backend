@@ -1,5 +1,5 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 const port = process.env.PORT || 3002;
 const cors = require('cors');
 var mongoose = require('mongoose');
@@ -11,7 +11,7 @@ mongoose.connect('mongodb://localhost:27017/local');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-  console.log("connected to mongodb");
+  console.log("connected to mongodb");  
 });
 
 app.use(cors());
