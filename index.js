@@ -28,7 +28,7 @@ app.get('/', (req, res) => res.send('Hello World!'));
 app.post('/note', (req, res) => {
   console.log(req.body);
   let note = new Note({note: req.body.note});
-  note.save(function (err, note) {
+  note.save((err, note) => {
     if (!err) {
       res.send({code: 0, msg: "Success"});
     } else {
