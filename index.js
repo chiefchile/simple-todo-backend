@@ -18,7 +18,6 @@ var noteSchema = new mongoose.Schema({
 });
 var Note = mongoose.model('Note', noteSchema);
 
-
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -30,11 +29,12 @@ app.post('/note', (req, res) => {
   let note = new Note({note: req.body.note});
   note.save((err, note) => {
     if (!err) {
-      res.send({code: 0, msg: "Success"});
-    } else {
+      res.send({ code: 0, msg: "Success" });
+    }
+    else {
       console.error(err);
-      res.send({code: -1, msg: "Error saving"})
-    } 
+      res.send({ code: -1, msg: "Error saving" });
+    }
   });
 })
 
