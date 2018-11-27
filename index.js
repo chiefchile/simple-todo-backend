@@ -4,7 +4,7 @@ const port = process.env.PORT || 3002;
 const cors = require('cors');
 var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
-const noteController = require('./note.controller.js')
+const noteController = require('./note.controller');
 
 // mongoose.connect('mongodb://alex:uxf5tudg@ds125821.mlab.com:25821/alexdb');
 mongoose.connect('mongodb://localhost:27017/local');

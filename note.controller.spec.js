@@ -1,5 +1,5 @@
 var assert = require('assert');
-const noteController = require('./note.controller.js')
+const noteController = require('./note.controller');
 
 describe('handleSave test', () => {
     it('should return 0 if there is no err', () => {

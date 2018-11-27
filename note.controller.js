@@ -1,15 +1,10 @@
-var mongoose = require('mongoose');
-
-var noteSchema = new mongoose.Schema({
-    note: String
-});
-var Note = mongoose.model('Note', noteSchema);
+const Note = require('./note');
 
 exports.createNote = (req, res) => {
     console.log(req.body);
     let note = new Note({ note: req.body.note });
     note.save((err, note) => {
-        res.send(handleSave(err, note));
+        res.send(exports.handleSave(err, note));
     });
 }
 
