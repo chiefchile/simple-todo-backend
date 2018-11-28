@@ -1,8 +1,8 @@
 const Note = require('./note');
-// TODO: Add logging
-// TODO: Write unit tests
+const logger = require('./logger');
+
 exports.createNote = (req, res) => {
-    console.log(req.body);
+    logger.info('Creating note', req.body);
     let note = new Note({ note: req.body.note });
     note.save((err, note) => {
         res.send(exports.handleSave(err, note));
@@ -13,13 +13,13 @@ exports.handleSave = (err, note) => {
     if (!err) {
         return { code: 0, msg: "Success", noteId: note._id };
     } else {
-        console.error(err);
+        logger.error(err);
         return { code: -1, msg: "Error saving" };
     }
 }
 
 exports.getNote = (req, res) => {
-	console.log(req.params);
+	logger.info('Getting note', req.params);
     Note.findById(req.params.noteId, (err, note) => {
         res.send(exports.handleFind(err, note));
     });
@@ -27,7 +27,7 @@ exports.getNote = (req, res) => {
 
 exports.handleFind = (err, note) => {
 	if (err) {
-		console.error(err);
+		logger.error(err);
 		return { code: -2, msg: "Error querying" };
 	}
 	
@@ -35,7 +35,7 @@ exports.handleFind = (err, note) => {
 }
 
 exports.updateNote = (req, res) => {
-	console.log(req.body);
+	logger.info('Updating note', req.body);
     Note.updateOne({ _id: req.body._id }, {note: req.body.note}, null, (err, writeOpResult) => {
         res.send(exports.handleUpate(err, writeOpResult));
     });
@@ -43,7 +43,7 @@ exports.updateNote = (req, res) => {
 
 exports.handleUpate = (err, writeOpResult) => {
 	if (err) {
-		console.error(err);
+		logger.error(err);
 		return { code: -3, msg: "Error updating" };
 	}
 	
@@ -55,7 +55,7 @@ exports.handleUpate = (err, writeOpResult) => {
 }
 
 exports.deleteNote = (req, res) => {
-	console.log(req.params);
+	logger.info('Deleting note', req.params);
     Note.deleteOne({_id: req.params.noteId}, (err, deleteResult) => {
         res.send(exports.handleDelete(err, deleteResult));
     });
@@ -63,7 +63,7 @@ exports.deleteNote = (req, res) => {
 
 exports.handleDelete = (err, deleteResult) => {
 	if (err) {
-		console.error(err);
+		logger.error(err);
 		return { code: -4, msg: "Error deleting" };
 	}
 	

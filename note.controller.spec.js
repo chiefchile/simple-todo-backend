@@ -47,7 +47,7 @@ describe('handleDelete test', () => {
         let deleteResult = noteController.handleDelete('err');
         assert.equal(deleteResult.code, -4);
     });
-	it('should return -11 if nothing is updated', () => {
+	it('should return -11 if nothing is deleted', () => {
         let deleteResult = noteController.handleDelete(null, {n: 0});
         assert.equal(deleteResult.code, -11);
     });
