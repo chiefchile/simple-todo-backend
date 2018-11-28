@@ -35,15 +35,19 @@ exports.handleFind = (err, note) => {
 
 exports.updateNote = (req, res) => {
 	console.log(req.body);
-    Note.update({ _id: req.body._id }, {note: req.body.note}, null, (err, note) => {
-        res.send(exports.handleUpate(err, note));
+    Note.updateOne({ _id: req.body._id }, {note: req.body.note}, null, (err, writeOpResult) => {
+        res.send(exports.handleUpate(err, writeOpResult));
     });
 }
 
-exports.handleUpate = (err, note) => {
+exports.handleUpate = (err, writeOpResult) => {
 	if (err) {
 		console.error(err);
 		return { code: -3, msg: "Error updating" };
+	}
+	
+	if (writeOpResult.nModified === 0) {
+		return {code: -10, msg: "No record updated"};
 	}
 	
 	return {code: 0, msg: "Success"};
@@ -51,15 +55,19 @@ exports.handleUpate = (err, note) => {
 
 exports.deleteNote = (req, res) => {
 	console.log(req.params);
-    Note.deleteOne({_id: req.params.noteId}, (err, note) => {
-        res.send(exports.handleDelete(err, note));
+    Note.deleteOne({_id: req.params.noteId}, (err, deleteResult) => {
+        res.send(exports.handleDelete(err, deleteResult));
     });
 }
 
-exports.handleDelete = (err, note) => {
+exports.handleDelete = (err, deleteResult) => {
 	if (err) {
 		console.error(err);
 		return { code: -4, msg: "Error deleting" };
+	}
+	
+	if (deleteResult.n === 0) {
+		return {code: -11, msg: "No record deleted"};
 	}
 	
 	return {code: 0, msg: "Success"};
