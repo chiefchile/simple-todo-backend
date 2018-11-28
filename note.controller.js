@@ -1,5 +1,6 @@
 const Note = require('./note');
-
+// TODO: Add logging
+// TODO: Write unit tests
 exports.createNote = (req, res) => {
     console.log(req.body);
     let note = new Note({ note: req.body.note });
