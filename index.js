@@ -6,8 +6,8 @@ var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 const noteController = require('./note.controller');
 
-// mongoose.connect('mongodb://alex:uxf5tudg@ds125821.mlab.com:25821/alexdb');
-mongoose.connect('mongodb://localhost:27017/local');
+mongoose.connect('mongodb://alex:uxf5tudg@ds125821.mlab.com:25821/alexdb');
+//mongoose.connect('mongodb://localhost:27017/local');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -21,5 +21,11 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => res.send('Hello World!'));
 
 app.post('/note', noteController.createNote);
+
+app.get('/note/:noteId', noteController.getNote);
+
+app.put('/note', noteController.updateNote);
+
+app.delete('/note/:noteId', noteController.deleteNote);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
