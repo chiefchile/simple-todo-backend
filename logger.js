@@ -6,6 +6,7 @@ module.exports = createLogger({
     format.simple()
   ),
   transports: [
-    new transports.File({ filename: 'combined.log' })
+    new transports.File({ filename: 'combined.log' }),
+	new transports.Console()
   ]
 });
