@@ -73,3 +73,20 @@ exports.handleDelete = (err, deleteResult) => {
 	
 	return {code: 0, msg: "Success"};
 }
+
+exports.getTitles = (req, res) => {
+	logger.info('Getting titles', req.params);
+    Note.find(null, (err, notes) => {
+        res.send(exports.handleFindTitles(err, notes));
+    });
+}
+
+exports.handleFindTitles = (err, notes) => {
+	if (err) {
+		logger.error(err);
+		return { code: -2, msg: "Error querying titles" };
+	}
+	
+	const titles = notes.map((note) => note.title);
+	return {code: 0, msg: "Success", titles: titles};
+}
