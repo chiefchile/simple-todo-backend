@@ -7,7 +7,7 @@ var bodyParser = require("body-parser");
 const noteController = require('./note.controller');
 
 mongoose.connect('mongodb://alex:password1@ds125821.mlab.com:25821/alexdb');
-//mongoose.connect('mongodb://localhost:27017/local');
+// mongoose.connect('mongodb://localhost:27017/local');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {

@@ -3,7 +3,7 @@ const logger = require('./logger');
 
 exports.createNote = (req, res) => {
     logger.info('Creating note', req.body);
-    let note = new Note({ note: req.body.note });
+    let note = new Note({ note: req.body.note, title: req.body.title });
     note.save((err, note) => {
         res.send(exports.handleSave(err, note));
     });
@@ -36,7 +36,7 @@ exports.handleFind = (err, note) => {
 
 exports.updateNote = (req, res) => {
 	logger.info('Updating note', req.body);
-    Note.updateOne({ _id: req.body._id }, {note: req.body.note}, null, (err, writeOpResult) => {
+    Note.updateOne({ _id: req.body._id }, {note: req.body.note, title: req.body.title}, null, (err, writeOpResult) => {
         res.send(exports.handleUpate(err, writeOpResult));
     });
 }
