@@ -1,5 +1,6 @@
 const Note = require('./note');
 const logger = require('./logger');
+const result = require('./result');
 
 exports.createNote = (req, res) => {
     logger.info('Creating note', req.body);
@@ -11,10 +12,12 @@ exports.createNote = (req, res) => {
 
 exports.handleSave = (err, note) => {
     if (!err) {
-        return { code: 0, msg: "Success", noteId: note._id };
+		let success = result.SUCCESS;
+		success.noteId = note._id;
+        return success;
     } else {
         logger.error(err);
-        return { code: -1, msg: "Error saving" };
+        return result.SAVE_ERR;
     }
 }
 
@@ -28,10 +31,12 @@ exports.getNote = (req, res) => {
 exports.handleFind = (err, note) => {
 	if (err) {
 		logger.error(err);
-		return { code: -2, msg: "Error querying" };
+		return result.FIND_NOTE_ERR;
 	}
 	
-	return {code: 0, msg: "Success", note: note};
+	let success = result.SUCCESS;
+	success.note = note;
+	return success;
 }
 
 exports.updateNote = (req, res) => {
@@ -44,14 +49,14 @@ exports.updateNote = (req, res) => {
 exports.handleUpate = (err, writeOpResult) => {
 	if (err) {
 		logger.error(err);
-		return { code: -3, msg: "Error updating" };
+		return result.UPDATE_NOTE_ERR;
 	}
 	
 	if (writeOpResult.nModified === 0) {
-		return {code: -10, msg: "No record updated"};
+		return result.NO_NOTE_UPDATED_ERR;
 	}
 	
-	return {code: 0, msg: "Success"};
+	return result.SUCCESS;
 }
 
 exports.deleteNote = (req, res) => {
@@ -64,14 +69,14 @@ exports.deleteNote = (req, res) => {
 exports.handleDelete = (err, deleteResult) => {
 	if (err) {
 		logger.error(err);
-		return { code: -4, msg: "Error deleting" };
+		return result.DELETE_NOTE_ERR;
 	}
 	
 	if (deleteResult.n === 0) {
-		return {code: -11, msg: "No record deleted"};
+		return result.NO_NOTE_DELETED_ERR;
 	}
 	
-	return {code: 0, msg: "Success"};
+	return result.SUCCESS;
 }
 
 exports.getTitles = (req, res) => {
@@ -84,9 +89,11 @@ exports.getTitles = (req, res) => {
 exports.handleFindTitles = (err, notes) => {
 	if (err) {
 		logger.error(err);
-		return { code: -5, msg: "Error querying titles" };
+		return result.FIND_TITLES_ERR;
 	}
 	
 	const titles = notes.map((note) => note.title);
-	return {code: 0, msg: "Success", titles: titles};
+	let success = result.SUCCESS;
+	success.titles = titles;
+	return success;
 }
