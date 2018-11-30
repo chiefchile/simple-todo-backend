@@ -90,7 +90,7 @@ exports.handleFindTitles = (err, notes) => {
 		return result.FIND_TITLES_ERR;
 	}
 	
-	const titles = notes.map((note) => note.title);
+	const titles = notes.map((note) => { return {title: note.title, noteId: note._id}});
 	const success = {...result.SUCCESS, titles};
 	//console.log(success);
 	return success;
