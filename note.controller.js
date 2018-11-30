@@ -3,7 +3,7 @@ const logger = require('./logger');
 
 exports.createNote = (req, res) => {
     logger.info('Creating note', req.body);
-    let note = new Note({ note: req.body.note, title: req.body.title });
+    let note = new Note({ note: req.body.note, title: req.body.title, user: req.body.user });
     note.save((err, note) => {
         res.send(exports.handleSave(err, note));
     });
@@ -76,7 +76,7 @@ exports.handleDelete = (err, deleteResult) => {
 
 exports.getTitles = (req, res) => {
 	logger.info('Getting titles', req.params);
-    Note.find(null, (err, notes) => {
+    Note.find({user: req.params.user}, (err, notes) => {
         res.send(exports.handleFindTitles(err, notes));
     });
 }
@@ -84,7 +84,7 @@ exports.getTitles = (req, res) => {
 exports.handleFindTitles = (err, notes) => {
 	if (err) {
 		logger.error(err);
-		return { code: -2, msg: "Error querying titles" };
+		return { code: -5, msg: "Error querying titles" };
 	}
 	
 	const titles = notes.map((note) => note.title);
