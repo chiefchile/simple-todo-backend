@@ -1,7 +1,7 @@
 const { assert } = require('chai');  
 const noteController = require('./note.controller');
 
-describe('handleSave test', () => {
+describe('handleSave()', () => {
     it('should return 0 if there is no err', () => {
         let saveResult = noteController.handleSave(null, {_id: 1});
         assert(saveResult.code === 0);
@@ -13,7 +13,7 @@ describe('handleSave test', () => {
     });
 });
 
-describe('handleFind test', () => {
+describe('handleFind()', () => {
     it('should return 0 if there is no err', () => {
         let findResult = noteController.handleFind(null, {note: "this is a note"});
         assert(findResult.code === 0);
@@ -25,7 +25,7 @@ describe('handleFind test', () => {
     });
 });
 
-describe('handleUpate test', () => {
+describe('handleUpate()', () => {
     it('should return 0 if there is no err', () => {
         let updateResult = noteController.handleUpate(null, {nModified: 1});
         assert(updateResult.code === 0);
@@ -40,7 +40,7 @@ describe('handleUpate test', () => {
     });
 });
 
-describe('handleDelete test', () => {
+describe('handleDelete()', () => {
     it('should return 0 if there is no err', () => {
         let deleteResult = noteController.handleDelete(null, {n: 1});
         assert(deleteResult.code === 0);
@@ -55,7 +55,7 @@ describe('handleDelete test', () => {
     });
 });
 
-describe('handleFindTitles test', () => {
+describe('handleFindTitles()', () => {
     it('should return 0 if there is no err', () => {
         let findResult = noteController.handleFindTitles(null, [{title: "Note Title"}]);
         assert(findResult.code === 0);
