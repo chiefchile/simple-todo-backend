@@ -12,8 +12,7 @@ exports.createNote = (req, res) => {
 
 exports.handleSave = (err, note) => {
     if (!err) {
-		let success = Object.assign({}, result.SUCCESS);
-		success.noteId = note._id;
+		const success = {...result.SUCCESS, noteId: note._id};
         return success;
     } else {
         logger.error(err);
@@ -34,8 +33,7 @@ exports.handleFind = (err, note) => {
 		return result.FIND_NOTE_ERR;
 	}
 	
-	let success = Object.assign({}, result.SUCCESS);
-	success.note = note;
+	const success = {...result.SUCCESS, note};
 	return success;
 }
 
@@ -93,7 +91,7 @@ exports.handleFindTitles = (err, notes) => {
 	}
 	
 	const titles = notes.map((note) => note.title);
-	let success = Object.assign({}, result.SUCCESS);
-	success.titles = titles;
+	const success = {...result.SUCCESS, titles};
+	//console.log(success);
 	return success;
 }
