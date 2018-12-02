@@ -22,12 +22,12 @@ app.get('/', (req, res) => res.send('Hello World!'));
 
 app.post('/note', noteController.createNote);
 
-app.get('/note/:noteId', noteController.getNote);
-
-app.get('/note/:noteId', noteController.getNote);
+app.get('/note/:_id', noteController.getNote);
 
 app.get('/titles/:user', noteController.getTitles);
 
-app.delete('/note/:noteId', noteController.deleteNote);
+app.delete('/note/:_id', noteController.deleteNote);
+
+app.put('/note', noteController.updateNote);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

@@ -12,7 +12,7 @@ exports.createNote = (req, res) => {
 
 exports.handleSave = (err, note) => {
     if (!err) {
-		const success = {...result.SUCCESS, noteId: note._id};
+		const success = {...result.SUCCESS, _id: note._id};
         return success;
     } else {
         logger.error(err);
@@ -22,7 +22,7 @@ exports.handleSave = (err, note) => {
 
 exports.getNote = (req, res) => {
 	logger.info('Getting note', req.params);
-    Note.findById(req.params.noteId, (err, note) => {
+    Note.findById(req.params._id, (err, note) => {
         res.send(exports.handleFind(err, note));
     });
 }
@@ -59,7 +59,7 @@ exports.handleUpate = (err, writeOpResult) => {
 
 exports.deleteNote = (req, res) => {
 	logger.info('Deleting note', req.params);
-    Note.deleteOne({_id: req.params.noteId}, (err, deleteResult) => {
+    Note.deleteOne({_id: req.params._id}, (err, deleteResult) => {
         res.send(exports.handleDelete(err, deleteResult));
     });
 }
@@ -90,7 +90,7 @@ exports.handleFindTitles = (err, notes) => {
 		return result.FIND_TITLES_ERR;
 	}
 	
-	const titles = notes.map((note) => { return {title: note.title, noteId: note._id}});
+	const titles = notes.map((note) => { return {title: note.title, _id: note._id}});
 	const success = {...result.SUCCESS, titles};
 	//console.log(success);
 	return success;
