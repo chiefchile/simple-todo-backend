@@ -10,7 +10,6 @@ exports.login = (req, res) => {
 }
 
 exports.handleLogin = (err, userFromDb, username, password) => {
-    logger.info(userFromDb);
     if (err) {
 		logger.error(err);
 		return result.LOGIN_ERR;
