@@ -1,17 +1,19 @@
 const Note = require('./note');
 const logger = require('./logger');
 const result = require('./result');
+import { Response, Request } from "express";
+import { INote } from './note';
 
-exports.createNote = (req, res) => {
+export const createNote = (req: Request, res: Response) => {
 	logger.info('Creating note', req.body);
 	let note = new Note({ note: req.body.note, title: req.body.title, user: req.body.user });
-	note.save((err, note) => {
+	note.save((err: Error, note: INote) => {
 		res.send(exports.handleSave(err, note));
 	});
 }
 
-exports.handleSave = (err, note) => {
-	if (!err) {
+export const handleSave = (err: Error | null, note: INote | null) => {
+	if (!err && note) {
 		const success = { code: 0, msg: 'Note created', _id: note._id };
 		return success;
 	} else {
@@ -20,14 +22,14 @@ exports.handleSave = (err, note) => {
 	}
 }
 
-exports.getNote = (req, res) => {
+export const getNote = (req: Request, res: Response) => {
 	logger.info('Getting note', req.params);
-	Note.findById(req.params._id, (err, note) => {
+	Note.findById(req.params._id, (err: Error, note: INote) => {
 		res.send(exports.handleFind(err, note));
 	});
 }
 
-exports.handleFind = (err, note) => {
+export const handleFind = (err: Error | null, note: INote | null) => {
 	if (err) {
 		logger.error(err);
 		return result.FIND_NOTE_ERR;
@@ -37,14 +39,14 @@ exports.handleFind = (err, note) => {
 	return success;
 }
 
-exports.updateNote = (req, res) => {
+export const updateNote = (req: Request, res: Response) => {
 	logger.info('Updating note', req.body);
-	Note.updateOne({ _id: req.body._id }, { note: req.body.note, title: req.body.title }, null, (err, writeOpResult) => {
+	Note.updateOne({ _id: req.body._id }, { note: req.body.note, title: req.body.title }, null, (err: Error, writeOpResult: any) => {
 		res.send(exports.handleUpate(err, writeOpResult));
 	});
 }
 
-exports.handleUpate = (err, writeOpResult) => {
+export const handleUpate = (err: Error | null, writeOpResult: any) => {
 	if (err) {
 		logger.error(err);
 		return result.UPDATE_NOTE_ERR;
@@ -57,14 +59,14 @@ exports.handleUpate = (err, writeOpResult) => {
 	return { code: 0, msg: 'Note updated' };
 }
 
-exports.deleteNote = (req, res) => {
+export const deleteNote = (req: Request, res: Response) => {
 	logger.info('Deleting note', req.params);
-	Note.deleteOne({ _id: req.params._id }, (err, deleteResult) => {
+	Note.deleteOne({ _id: req.params._id }, (err: Error, deleteResult: any) => {
 		res.send(exports.handleDelete(err, deleteResult));
 	});
 }
 
-exports.handleDelete = (err, deleteResult) => {
+export const handleDelete = (err: Error | null, deleteResult: any) => {
 	if (err) {
 		logger.error(err);
 		return result.DELETE_NOTE_ERR;
@@ -77,14 +79,14 @@ exports.handleDelete = (err, deleteResult) => {
 	return result.SUCCESS;
 }
 
-exports.getTitles = (req, res) => {
+export const getTitles = (req: Request, res: Response) => {
 	logger.info('Getting titles', req.params);
-	Note.find({ user: req.params.user }, (err, notes) => {
+	Note.find({ user: req.params.user }, (err: Error, notes: INote[]) => {
 		res.send(exports.handleFindTitles(err, notes));
 	});
 }
 
-exports.handleFindTitles = (err, notes) => {
+export const handleFindTitles = (err: Error | null, notes: INote[]) => {
 	if (err) {
 		logger.error(err);
 		return result.FIND_TITLES_ERR;
