@@ -6,5 +6,5 @@ var noteSchema = new mongoose.Schema({
     title: String,
     user: String,
 });
-module.exports = mongoose.model('Note', noteSchema);
+exports.Note = mongoose.model('Note', noteSchema);
 //# sourceMappingURL=note.js.map

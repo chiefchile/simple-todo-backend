@@ -9,9 +9,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const { assert } = require('chai');
 const noteController = __importStar(require("./note.controller"));
+const NOTE = { _id: '1', note: 'note', title: 'title', user: 'alex' };
 describe('handleSave()', () => {
     it('should return 0 if there is no err', () => {
-        let saveResult = noteController.handleSave(null, { _id: '1', note: 'note', title: 'title', user: 'alex' });
+        let saveResult = noteController.handleSave(null, NOTE);
         assert(saveResult.code === 0);
         assert.isOk(saveResult._id);
     });
@@ -22,7 +23,7 @@ describe('handleSave()', () => {
 });
 describe('handleFind()', () => {
     it('should return 0 if there is no err', () => {
-        let findResult = noteController.handleFind(null, { _id: '1', note: 'note', title: 'title', user: 'alex' });
+        let findResult = noteController.handleFind(null, NOTE);
         assert(findResult.code === 0);
         assert.isOk(findResult.note);
     });
@@ -61,7 +62,7 @@ describe('handleDelete()', () => {
 });
 describe('handleFindTitles()', () => {
     it('should return 0 if there is no err', () => {
-        let findResult = noteController.handleFindTitles(null, [{ _id: '1', note: 'note', title: 'title', user: 'alex' }]);
+        let findResult = noteController.handleFindTitles(null, [NOTE]);
         assert(findResult.code === 0);
         assert.isOk(findResult.titles);
     });

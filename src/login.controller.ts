@@ -1,29 +1,28 @@
-const User = require('./user');
 const logger = require('./logger');
-const result = require('./result');
+import Result, * as ResultConst from './result';
 import { Response, Request } from "express";
-import { IUser } from './user';
+import { IUser, User } from './user';
 
-export const login = (req: Request, res: Response) => {
+export const login = (req: Request, res: Response): void => {
 	logger.info(`Logging in ${req.body.username}`);
     User.findOne({username: req.body.username}, (err: Error, user: IUser) => {
         res.send(exports.handleLogin(err, user, req.body.username, req.body.password));
     });
 }
 
-export const handleLogin = (err: Error | null, userFromDb: IUser | null, username: string, password: string) => {
+export const handleLogin = (err: Error | null, userFromDb: IUser | null, username: string, password: string): Result => {
     if (err) {
 		logger.error(err);
-		return result.LOGIN_ERR;
+		return ResultConst.LOGIN_ERR;
     }
     
     if (!userFromDb) {
-        return result.USER_NOT_FOUND_ERR;
+        return ResultConst.USER_NOT_FOUND_ERR;
     }
 
     if (userFromDb.password !== password) {
-        return result.INVALID_PASSWORD_ERR;
+        return ResultConst.INVALID_PASSWORD_ERR;
     }
 
-	return result.SUCCESS;
+	return ResultConst.SUCCESS;
 }

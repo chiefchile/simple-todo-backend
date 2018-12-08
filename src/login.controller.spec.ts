@@ -1,5 +1,6 @@
 const { assert } = require('chai');
 import  { handleLogin } from './login.controller';
+import { IUser } from './user'; 
 
 describe('handleLogin()', () => {
     it('should return 0 if there is no err', () => {

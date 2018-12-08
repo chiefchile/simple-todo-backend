@@ -6,7 +6,7 @@ var noteSchema = new mongoose.Schema({
 	user: String,
 });
 
-module.exports = mongoose.model('Note', noteSchema);
+export const Note = mongoose.model('Note', noteSchema);
 
 export interface INote {
 	note: string,
