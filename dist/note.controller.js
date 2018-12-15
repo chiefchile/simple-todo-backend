@@ -75,7 +75,7 @@ exports.handleDelete = (err, deleteResult) => {
 };
 exports.getTitles = (req, res) => {
     logger.info('Getting titles', req.params);
-    note_1.Note.find({ user: req.params.user }, (err, notes) => {
+    note_1.Note.find({ user: req.params.user }, null, { sort: 'title' }, (err, notes) => {
         res.send(exports.handleFindTitles(err, notes));
     });
 };

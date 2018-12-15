@@ -83,7 +83,7 @@ export const handleDelete = (err: Error | null, deleteResult: any): Result => {
 
 export const getTitles = (req: Request, res: Response): void => {
 	logger.info('Getting titles', req.params);
-	Note.find({ user: req.params.user }, (err: Error, notes: INote[]) => {
+	Note.find({ user: req.params.user }, null, {sort: 'title'}, (err: Error, notes: INote[]) => {
 		res.send(exports.handleFindTitles(err, notes));
 	});
 }
