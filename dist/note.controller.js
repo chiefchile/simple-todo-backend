@@ -89,4 +89,10 @@ exports.handleFindTitles = (err, notes) => {
     //console.log(success);
     return success;
 };
+exports.deleteNoteByUser = (req, res) => {
+    logger.info('Deleting all notes by user', req.params);
+    note_1.Note.deleteMany({ user: req.params.user }, (err, deleteResult) => {
+        res.send();
+    });
+};
 //# sourceMappingURL=note.controller.js.map

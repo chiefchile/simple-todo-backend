@@ -99,3 +99,10 @@ export const handleFindTitles = (err: Error | null, notes: INote[]): GetTitlesRe
 	//console.log(success);
 	return success;
 }
+
+export const deleteNoteByUser = (req: Request, res: Response): void => {
+	logger.info('Deleting all notes by user', req.params);
+	Note.deleteMany({ user: req.params.user }, (err: Error, deleteResult: any) => {
+		res.send();
+	});
+}

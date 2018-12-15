@@ -29,6 +29,8 @@ app.get('/titles/:user', noteController.getTitles);
 
 app.delete('/note/:_id', noteController.deleteNote);
 
+app.delete('/note/deleteByUser/:user', noteController.deleteNoteByUser);
+
 app.put('/note', noteController.updateNote);
 
 app.post('/login', loginController.login);
