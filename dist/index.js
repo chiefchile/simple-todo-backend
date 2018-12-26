@@ -22,6 +22,7 @@ app.post('/note', noteController.createNote);
 app.get('/note/:_id', noteController.getNote);
 app.get('/titles/:user', noteController.getTitles);
 app.delete('/note/:_id', noteController.deleteNote);
+app.delete('/note/deleteByUser/:user', noteController.deleteNoteByUser);
 app.put('/note', noteController.updateNote);
 app.post('/login', loginController.login);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

@@ -75,7 +75,7 @@ exports.handleDelete = (err, deleteResult) => {
 };
 exports.getTitles = (req, res) => {
     logger.info('Getting titles', req.params);
-    note_1.Note.find({ user: req.params.user }, (err, notes) => {
+    note_1.Note.find({ user: req.params.user }, null, { sort: 'title' }, (err, notes) => {
         res.send(exports.handleFindTitles(err, notes));
     });
 };
@@ -88,5 +88,11 @@ exports.handleFindTitles = (err, notes) => {
     const success = Object.assign({}, ResultConst.SUCCESS, { titles });
     //console.log(success);
     return success;
+};
+exports.deleteNoteByUser = (req, res) => {
+    logger.info('Deleting all notes by user', req.params);
+    note_1.Note.deleteMany({ user: req.params.user }, (err, deleteResult) => {
+        res.send();
+    });
 };
 //# sourceMappingURL=note.controller.js.map
