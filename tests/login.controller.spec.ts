@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { handleLogin } from "./login.controller";
+import { handleLogin } from "../src/routes/login.controller";
 
 describe("LoginController", (): void => {
   describe("handleLogin()", (): void => {

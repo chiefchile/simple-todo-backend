@@ -1,6 +1,6 @@
 import { assert } from "chai";
-import * as noteController from "./note.controller";
-import { INote, Note } from "./note";
+import * as noteController from "../src/routes/note.controller";
+import { INote, Note } from "../src/models/note";
 
 const NOTE: INote = new Note({
   _id: "1",
@@ -61,18 +61,6 @@ describe("NoteController", (): void => {
     it("should return -7 if nothing is deleted", (): void => {
       let deleteResult = noteController.handleDelete(null, { n: 0 });
       assert(deleteResult.code === -7);
-    });
-  });
-
-  describe("handleFindTitles()", (): void => {
-    it("should return 0 if there is no err", (): void => {
-      let findResult = noteController.handleFindTitles(null, [NOTE]);
-      assert(findResult.code === 0);
-      assert.isOk(findResult.titles);
-    });
-    it("should return -5 if there is an err", (): void => {
-      let findResult = noteController.handleFindTitles(new Error(), []);
-      assert(findResult.code === -5);
     });
   });
 });
