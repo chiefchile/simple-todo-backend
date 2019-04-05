@@ -116,4 +116,18 @@ router.delete(
   }
 );
 
+router.delete(
+  "/deleteByUser/:user",
+  (req: Request, res: Response): void => {
+    logger.info("Deleting all notes by user", req.params);
+
+    Note.deleteMany(
+      { user: req.params.user },
+      (): void => {
+        res.send();
+      }
+    );
+  }
+);
+
 export default router;

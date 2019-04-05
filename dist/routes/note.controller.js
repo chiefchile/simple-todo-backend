@@ -84,5 +84,11 @@ router.delete("/:_id", (req, res) => {
         res.send(exports.handleDelete(err, deleteResult));
     });
 });
+router.delete("/deleteByUser/:user", (req, res) => {
+    logger_1.logger.info("Deleting all notes by user", req.params);
+    note_1.Note.deleteMany({ user: req.params.user }, () => {
+        res.send();
+    });
+});
 exports.default = router;
 //# sourceMappingURL=note.controller.js.map
