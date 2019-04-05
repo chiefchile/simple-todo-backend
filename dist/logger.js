@@ -1,13 +1,14 @@
 "use strict";
-const { createLogger, format, transports } = require('winston');
-module.exports = createLogger({
-    level: 'info',
-    format: format.combine(
+Object.defineProperty(exports, "__esModule", { value: true });
+const winston_1 = require("winston");
+exports.logger = winston_1.createLogger({
+    level: "info",
+    format: winston_1.format.combine(
     //format.splat(),
-    format.simple()),
+    winston_1.format.simple()),
     transports: [
-        new transports.File({ filename: 'combined.log' }),
-        new transports.Console()
+        new winston_1.transports.File({ filename: "combined.log" }),
+        new winston_1.transports.Console()
     ]
 });
 //# sourceMappingURL=logger.js.map

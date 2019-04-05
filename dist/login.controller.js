@@ -7,18 +7,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const logger = require('./logger');
+const logger_1 = require("./logger");
 const ResultConst = __importStar(require("./result"));
 const user_1 = require("./user");
 exports.login = (req, res) => {
-    logger.info(`Logging in ${req.body.username}`);
+    logger_1.logger.info(`Logging in ${req.body.username}`);
     user_1.User.findOne({ username: req.body.username }, (err, user) => {
         res.send(exports.handleLogin(err, user, req.body.username, req.body.password));
     });
 };
 exports.handleLogin = (err, userFromDb, username, password) => {
     if (err) {
-        logger.error(err);
+        logger_1.logger.error(err);
         return ResultConst.LOGIN_ERR;
     }
     if (!userFromDb) {
