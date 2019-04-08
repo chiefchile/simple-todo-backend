@@ -11,7 +11,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const routes_1 = __importDefault(require("./routes/routes"));
 const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017/local";
-// mongoose.connect('mongodb://alex:password1@ds125821.mlab.com:25821/alexdb');
 mongoose.connect(MONGO_URL);
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
