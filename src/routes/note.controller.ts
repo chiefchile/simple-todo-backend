@@ -22,7 +22,7 @@ router.post("/", (req: Request, res: Response): void => {
   let note = new Note({
     note: req.body.note,
     title: req.body.title,
-    user: req.body.user,
+    username: req.body.username,
   });
   note.save((err, note): void => {
     res.send(handleSave(err, note));

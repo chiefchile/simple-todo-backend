@@ -43,6 +43,7 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
     }
     res.send(result);
   } catch (error) {
+    logger.error("err", error);
     res.statusCode = 500;
     res.send(error);
   }
