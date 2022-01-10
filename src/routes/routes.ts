@@ -7,6 +7,6 @@ import login from "./login.controller";
 
 router.use("/note", notes);
 router.use("/titles", titles);
-router.use("/login", login);
+router.use("/api-token-auth", login);
 
 export default router;

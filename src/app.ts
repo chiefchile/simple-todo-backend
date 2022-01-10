@@ -6,11 +6,12 @@ import mongoose = require("mongoose");
 import bodyParser = require("body-parser");
 import routes from "./routes/routes";
 
-const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017/local";
+const MONGO_URL =
+  process.env.MONGO_URL || "mongodb://localhost:27017/simple-todo-backend";
 mongoose.connect(MONGO_URL);
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function(): void {
+db.once("open", function (): void {
   console.log("connected to mongodb");
 });
 
@@ -20,7 +21,6 @@ app.use(bodyParser.json());
 
 app.use("/", routes);
 
-app.listen(
-  port,
-  (): void => console.log(`Example app listening on port ${port}!`)
+app.listen(port, (): void =>
+  console.log(`Example app listening on port ${port}!`)
 );

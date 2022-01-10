@@ -17,22 +17,17 @@ export const handleSave = (err: any, note: INote | null): CreateNoteResult => {
   }
 };
 
-router.post(
-  "/",
-  (req: Request, res: Response): void => {
-    logger.info("Creating note", req.body);
-    let note = new Note({
-      note: req.body.note,
-      title: req.body.title,
-      user: req.body.user
-    });
-    note.save(
-      (err: Error, note: INote): void => {
-        res.send(handleSave(err, note));
-      }
-    );
-  }
-);
+router.post("/", (req: Request, res: Response): void => {
+  logger.info("Creating note", req.body);
+  let note = new Note({
+    note: req.body.note,
+    title: req.body.title,
+    user: req.body.user,
+  });
+  note.save((err, note): void => {
+    res.send(handleSave(err, note));
+  });
+});
 
 export const handleFind = (
   err: Error | null,
@@ -47,18 +42,12 @@ export const handleFind = (
   return success;
 };
 
-router.get(
-  "/:_id",
-  (req: Request, res: Response): void => {
-    logger.info("Getting note", req.params);
-    Note.findById(
-      req.params._id,
-      (err: Error, note: INote): void => {
-        res.send(handleFind(err, note));
-      }
-    );
-  }
-);
+router.get("/:_id", (req: Request, res: Response): void => {
+  logger.info("Getting note", req.params);
+  Note.findById(req.params._id, (err: Error, note: INote): void => {
+    res.send(handleFind(err, note));
+  });
+});
 
 export const handleUpate = (err: Error | null, writeOpResult: any): Result => {
   if (err) {
@@ -73,20 +62,17 @@ export const handleUpate = (err: Error | null, writeOpResult: any): Result => {
   return { code: 0, msg: "Note updated" };
 };
 
-router.put(
-  "/",
-  (req: Request, res: Response): void => {
-    logger.info("Updating note", req.body);
-    Note.updateOne(
-      { _id: req.body._id },
-      { note: req.body.note, title: req.body.title },
-      {},
-      (err: Error, writeOpResult: any): void => {
-        res.send(handleUpate(err, writeOpResult));
-      }
-    );
-  }
-);
+router.put("/", (req: Request, res: Response): void => {
+  logger.info("Updating note", req.body);
+  Note.updateOne(
+    { _id: req.body._id },
+    { note: req.body.note, title: req.body.title },
+    {},
+    (err, writeOpResult): void => {
+      res.send(handleUpate(err, writeOpResult));
+    }
+  );
+});
 
 export const handleDelete = (err: Error | null, deleteResult: any): Result => {
   if (err) {
@@ -101,33 +87,24 @@ export const handleDelete = (err: Error | null, deleteResult: any): Result => {
   return ResultConst.SUCCESS;
 };
 
-router.delete(
-  "/:_id",
-  (req: Request, res: Response): void => {
-    logger.info("Deleting note", req.params);
+router.delete("/:_id", (req: Request, res: Response): void => {
+  logger.info("Deleting note", req.params);
 
-    Note.deleteOne(
-      { _id: req.params._id },
-      // @ts-ignore
-      (err: Error, deleteResult: any): void => {
-        res.send(handleDelete(err, deleteResult));
-      }
-    );
-  }
-);
+  Note.deleteOne(
+    { _id: req.params._id },
+    // @ts-ignore
+    (err: Error, deleteResult: any): void => {
+      res.send(handleDelete(err, deleteResult));
+    }
+  );
+});
 
-router.delete(
-  "/deleteByUser/:user",
-  (req: Request, res: Response): void => {
-    logger.info("Deleting all notes by user", req.params);
+router.delete("/deleteByUser/:user", (req: Request, res: Response): void => {
+  logger.info("Deleting all notes by user", req.params);
 
-    Note.deleteMany(
-      { user: req.params.user },
-      (): void => {
-        res.send();
-      }
-    );
-  }
-);
+  Note.deleteMany({ user: req.params.user }, (): void => {
+    res.send();
+  });
+});
 
 export default router;

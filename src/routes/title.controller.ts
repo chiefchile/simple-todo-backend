@@ -15,29 +15,24 @@ export const handleFindTitles = (
     return ResultConst.FIND_TITLES_ERR;
   }
 
-  const titles = notes.map(
-    (note): any => {
-      return { title: note.title, _id: note._id };
-    }
-  );
+  const titles = notes.map((note): any => {
+    return { title: note.title, _id: note._id };
+  });
   const success = { ...ResultConst.SUCCESS, titles };
   //console.log(success);
   return success;
 };
 
-router.get(
-  "/:user",
-  (req: Request, res: Response): void => {
-    logger.info("Getting titles", req.params);
-    Note.find(
-      { user: req.params.user },
-      null,
-      { sort: "title" },
-      (err: Error, notes: INote[]): void => {
-        res.send(handleFindTitles(err, notes));
-      }
-    );
-  }
-);
+router.get("/:user", (req: Request, res: Response): void => {
+  logger.info("Getting titles", req.params);
+  Note.find(
+    { user: req.params.user },
+    null,
+    { sort: "title" },
+    (err, notes): void => {
+      res.send(handleFindTitles(err, notes));
+    }
+  );
+});
 
 export default router;
