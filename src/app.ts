@@ -5,6 +5,7 @@ import cors from "cors";
 import mongoose = require("mongoose");
 import bodyParser = require("body-parser");
 import routes from "./routes/routes";
+import { authenticateToken } from "./middleware/auth";
 
 const MONGO_URL =
   process.env.MONGO_URL || "mongodb://localhost:27017/simple-todo-backend";
@@ -18,6 +19,7 @@ db.once("open", function (): void {
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(authenticateToken);
 
 app.use("/", routes);
 

@@ -8,6 +8,11 @@ export function authenticateToken(
   next: any
 ): Response | void {
   try {
+    if (req.path === "/api-token-auth" || req.path === "/note/deleteTestData") {
+      next();
+      return;
+    }
+
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
 
