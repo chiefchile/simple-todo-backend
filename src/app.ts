@@ -16,7 +16,14 @@ db.once("open", function (): void {
   console.log("connected to mongodb");
 });
 
-app.use(cors());
+const corsOptions = {
+  origin: [
+    "http://localhost",
+    "http://localhost:3000",
+    "https://alex-simple-todo.herokuapp.com/",
+  ],
+};
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(authenticateToken);
