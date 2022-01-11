@@ -6,7 +6,7 @@ export function authenticateToken(
   req: Request,
   res: Response,
   next: any
-): Response | void {
+): void {
   try {
     if (
       req.path.startsWith("/api-token-auth") ||
@@ -20,7 +20,8 @@ export function authenticateToken(
     const token = authHeader && authHeader.split(" ")[1];
 
     if (token == null) {
-      return res.sendStatus(401);
+      res.sendStatus(401);
+      return;
     }
 
     const secret = process.env.TODO_BACKEND_SECRET || "";
