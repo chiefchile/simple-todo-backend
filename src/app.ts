@@ -20,7 +20,7 @@ const corsOptions = {
   origin: [
     "http://localhost",
     "http://localhost:3000",
-    "https://alex-simple-todo.herokuapp.com/",
+    "https://alex-simple-todo.herokuapp.com",
   ],
 };
 app.use(cors(corsOptions));
