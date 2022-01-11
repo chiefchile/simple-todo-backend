@@ -8,7 +8,10 @@ export function authenticateToken(
   next: any
 ): Response | void {
   try {
-    if (req.path === "/api-token-auth" || req.path === "/note/deleteTestData") {
+    if (
+      req.path.startsWith("/api-token-auth") ||
+      req.path.startsWith("/note/deleteTestData")
+    ) {
       next();
       return;
     }
@@ -16,7 +19,9 @@ export function authenticateToken(
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
 
-    if (token == null) return res.sendStatus(401);
+    if (token == null) {
+      return res.sendStatus(401);
+    }
 
     const secret = process.env.TODO_BACKEND_SECRET || "";
     const decoded: any = jwt.verify(token, secret);

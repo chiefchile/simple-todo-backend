@@ -5,6 +5,14 @@ import express from "express";
 
 var router = express.Router();
 
+router.get("/deleteTestData", (req: Request, res: Response): void => {
+  logger.info("Deleting all notes by testuser");
+
+  Note.deleteMany({ username: "testuser" }, (): void => {
+    res.sendStatus(200);
+  });
+});
+
 router.post("/", async (req: Request, res: Response): Promise<void> => {
   logger.info("Creating note", req.body);
   let note = new Note({
@@ -56,14 +64,6 @@ router.delete("/:_id", async (req: Request, res: Response): Promise<void> => {
     logger.error(error);
     res.sendStatus(500);
   }
-});
-
-router.get("/deleteTestData", (req: Request, res: Response): void => {
-  logger.info("Deleting all notes by testuser");
-
-  Note.deleteMany({ user: "testuser" }, (): void => {
-    res.sendStatus(200);
-  });
 });
 
 export default router;
