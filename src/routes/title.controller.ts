@@ -23,11 +23,11 @@ export const handleFindTitles = (
   return success;
 };
 
-router.get("/:user", (req: Request, res: Response): void => {
-  logger.info("Getting titles", req.params);
+router.get("/", (req: Request, res: Response): void => {
+  logger.info("Getting titles", req.body.username);
   Note.find(
-    { user: req.params.user },
-    null,
+    { username: req.body.username },
+    { title: 1 },
     { sort: "title" },
     (err, notes): void => {
       res.send(handleFindTitles(err, notes));

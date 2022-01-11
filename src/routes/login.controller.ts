@@ -42,8 +42,8 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
       res.statusCode = 500;
     }
     res.send(result);
-  } catch (error) {
-    logger.error("err", error);
+  } catch (error: any) {
+    logger.error(error);
     res.statusCode = 500;
     res.send(error);
   }

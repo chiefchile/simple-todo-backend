@@ -17,8 +17,8 @@ export function authenticateToken(
     const decoded: any = jwt.verify(token, secret);
     req.body.username = decoded.username;
     next();
-  } catch (error) {
-    logger.error("err", error);
+  } catch (error: any) {
+    logger.error(error);
     res.sendStatus(403);
   }
 }

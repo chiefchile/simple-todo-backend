@@ -1,109 +1,68 @@
 import { logger } from "../logger";
-import Result, * as ResultConst from "../interfaces/result";
 import { Response, Request } from "express";
-import { INote, Note } from "../models/note";
-import CreateNoteResult from "../interfaces/create-note-result";
-import GetNoteResult from "../interfaces/get-note-result";
+import { Note } from "../models/note";
 import express from "express";
+
 var router = express.Router();
 
-export const handleSave = (err: any, note: INote | null): CreateNoteResult => {
-  if (!err && note) {
-    const success = { code: 0, msg: "Note created", _id: note._id };
-    return success;
-  } else {
-    logger.error(err);
-    return ResultConst.SAVE_ERR;
-  }
-};
-
-router.post("/", (req: Request, res: Response): void => {
+router.post("/", async (req: Request, res: Response): Promise<void> => {
   logger.info("Creating note", req.body);
   let note = new Note({
     note: req.body.note,
     title: req.body.title,
     username: req.body.username,
   });
-  note.save((err, note): void => {
-    res.send(handleSave(err, note));
-  });
+  try {
+    const result = await note.save();
+    res.send(result);
+  } catch (error: any) {
+    logger.error(error);
+    res.sendStatus(500);
+  }
 });
 
-export const handleFind = (
-  err: Error | null,
-  note: INote | null
-): GetNoteResult => {
-  if (err) {
-    logger.error(err);
-    return ResultConst.FIND_NOTE_ERR;
-  }
-
-  const success = { ...ResultConst.SUCCESS, note };
-  return success;
-};
-
-router.get("/:_id", (req: Request, res: Response): void => {
+router.get("/:_id", async (req: Request, res: Response): Promise<void> => {
   logger.info("Getting note", req.params);
-  Note.findById(req.params._id, (err: Error, note: INote): void => {
-    res.send(handleFind(err, note));
-  });
+
+  try {
+    const result = await Note.findById(req.params._id).exec();
+    res.send(result);
+  } catch (error) {
+    logger.error(error);
+    res.sendStatus(500);
+  }
 });
 
-export const handleUpate = (err: Error | null, writeOpResult: any): Result => {
-  if (err) {
-    logger.error(err);
-    return ResultConst.UPDATE_NOTE_ERR;
+router.put("/:_id", async (req: Request, res: Response): Promise<void> => {
+  logger.info("Updating note", req.params);
+  try {
+    await Note.updateOne(
+      { _id: req.params._id },
+      { note: req.body.note, title: req.body.title }
+    );
+    res.sendStatus(200);
+  } catch (error) {
+    logger.error(error);
+    res.sendStatus(500);
   }
-
-  if (writeOpResult.nModified === 0) {
-    return ResultConst.NO_NOTE_UPDATED_ERR;
-  }
-
-  return { code: 0, msg: "Note updated" };
-};
-
-router.put("/", (req: Request, res: Response): void => {
-  logger.info("Updating note", req.body);
-  Note.updateOne(
-    { _id: req.body._id },
-    { note: req.body.note, title: req.body.title },
-    {},
-    (err, writeOpResult): void => {
-      res.send(handleUpate(err, writeOpResult));
-    }
-  );
 });
 
-export const handleDelete = (err: Error | null, deleteResult: any): Result => {
-  if (err) {
-    logger.error(err);
-    return ResultConst.DELETE_NOTE_ERR;
-  }
-
-  if (deleteResult.n === 0) {
-    return ResultConst.NO_NOTE_DELETED_ERR;
-  }
-
-  return ResultConst.SUCCESS;
-};
-
-router.delete("/:_id", (req: Request, res: Response): void => {
+router.delete("/:_id", async (req: Request, res: Response): Promise<void> => {
   logger.info("Deleting note", req.params);
-
-  Note.deleteOne(
-    { _id: req.params._id },
-    // @ts-ignore
-    (err: Error, deleteResult: any): void => {
-      res.send(handleDelete(err, deleteResult));
-    }
-  );
+  try {
+    await Note.deleteOne({ _id: req.params._id });
+    res.sendStatus(200);
+  } catch (error) {
+    logger.error(error);
+    res.sendStatus(500);
+  }
 });
 
-router.delete("/deleteByUser/:user", (req: Request, res: Response): void => {
-  logger.info("Deleting all notes by user", req.params);
+router.get("/deleteTestData", (req: Request, res: Response): void => {
+  logger.info("Deleting all notes by testuser");
 
-  Note.deleteMany({ user: req.params.user }, (): void => {
-    res.send();
+  Note.deleteMany({ user: "testuser" }, (): void => {
+    res.sendStatus(200);
   });
 });
 
