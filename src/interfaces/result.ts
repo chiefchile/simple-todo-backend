@@ -22,6 +22,10 @@ export const INVALID_PASSWORD_ERR: Result = {
   code: -12,
   msg: "Invalid password",
 };
+export const GENERAL_ERR: Result = {
+  code: -100,
+  msg: "GENERAL_ERR",
+};
 
 export default interface Result {
   code: number;

@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 const app = express();
 const port = process.env.PORT || 3002;
 import cors from "cors";
@@ -6,6 +6,8 @@ import mongoose = require("mongoose");
 import bodyParser = require("body-parser");
 import routes from "./routes/routes";
 import { authenticateToken } from "./middleware/auth";
+import { logger } from "./logger";
+import { GENERAL_ERR } from "./interfaces/result";
 
 const MONGO_URL =
   process.env.MONGO_URL || "mongodb://localhost:27017/simple-todo-backend";
@@ -27,8 +29,11 @@ app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(authenticateToken);
-
 app.use("/", routes);
+app.use(function (err: any, req: Request, res: Response, next: any) {
+  logger.error(err);
+  res.status(500).json(GENERAL_ERR);
+});
 
 app.listen(port, (): void =>
   console.log(`Example app listening on port ${port}!`)
