@@ -3,7 +3,7 @@ import { Response, Request } from "express";
 import { Note } from "../models/note";
 import express from "express";
 
-var router = express.Router();
+const router = express.Router();
 
 router.get("/deleteTestData", (req: Request, res: Response): void => {
   logger.info("Deleting all notes by testuser");
@@ -15,7 +15,7 @@ router.get("/deleteTestData", (req: Request, res: Response): void => {
 
 router.post("/", async (req: Request, res: Response): Promise<void> => {
   logger.info("Creating note", req.body);
-  let note = new Note({
+  const note = new Note({
     note: req.body.note,
     title: req.body.title,
     username: req.body.username,

@@ -3,7 +3,7 @@ import { Response, Request } from "express";
 import { Note } from "../models/note";
 import express from "express";
 
-var router = express.Router();
+const router = express.Router();
 
 router.get("/", async (req: Request, res: Response): Promise<void> => {
   logger.info("Getting titles", req.body.username);

@@ -6,7 +6,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-var router = express.Router();
+const router = express.Router();
 
 export const handleLogin = async (
   userFromDb: IUser | null,

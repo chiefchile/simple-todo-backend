@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose";
 
-var userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUser>({
   username: String,
   password: String,
 });

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-var noteSchema = new mongoose.Schema<INote>({
+const noteSchema = new mongoose.Schema<INote>({
   note: String,
   title: String,
   username: String,
