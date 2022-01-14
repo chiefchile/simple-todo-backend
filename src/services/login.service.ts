@@ -12,12 +12,12 @@ export const login = async (
   }).exec();
 
   if (!userFromDb) {
-    return { code: 404 };
+    return { code: 404, msg: "Invalid username or password" };
   }
 
   const match = await bcrypt.compare(password, userFromDb.password);
   if (!match) {
-    return { code: 404 };
+    return { code: 404, msg: "Invalid username or password" };
   }
 
   const secret = process.env.TODO_BACKEND_SECRET || "";

@@ -12,7 +12,7 @@ router.post(
     try {
       const result = await login(req.body.username, req.body.password);
       if (result.code !== 200) {
-        res.sendStatus(result.code);
+        res.status(result.code).json(result);
         return;
       }
 
