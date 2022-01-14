@@ -11,9 +11,8 @@ router.post(
     logger.info(`Logging in ${req.body.username}`);
     try {
       const result = await login(req.body.username, req.body.password);
-      if (result.code < 0) {
-        res.statusCode = 500;
-        res.json(result);
+      if (result.code !== 200) {
+        res.sendStatus(result.code);
         return;
       }
 

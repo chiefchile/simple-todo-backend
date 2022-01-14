@@ -5,7 +5,6 @@ import bodyParser = require("body-parser");
 import routes from "./routes/routes";
 import { authenticateToken } from "./middleware/auth";
 import { logger } from "./logger";
-import { GENERAL_ERR } from "./interfaces/result";
 
 const MONGO_URL =
   process.env.MONGO_URL || "mongodb://localhost:27017/simple-todo-backend";
@@ -35,7 +34,7 @@ app.use("/", routes);
 // Error handler should be the last middleware
 app.use(function (err: any, req: Request, res: Response, next: any) {
   logger.error(err);
-  res.status(500).json(GENERAL_ERR);
+  res.sendStatus(500);
 });
 
 app.listen(port, (): void =>
