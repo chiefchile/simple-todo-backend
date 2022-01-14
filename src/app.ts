@@ -1,6 +1,4 @@
 import express, { Request, Response } from "express";
-const app = express();
-const port = process.env.PORT || 3002;
 import cors from "cors";
 import mongoose = require("mongoose");
 import bodyParser = require("body-parser");
@@ -18,6 +16,9 @@ db.once("open", function (): void {
   console.log("connected to mongodb");
 });
 
+const app = express();
+const port = process.env.PORT || 3002;
+
 const corsOptions = {
   origin: [
     "http://localhost",
@@ -30,6 +31,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(authenticateToken);
 app.use("/", routes);
+
+// Error handler should be the last middleware
 app.use(function (err: any, req: Request, res: Response, next: any) {
   logger.error(err);
   res.status(500).json(GENERAL_ERR);
