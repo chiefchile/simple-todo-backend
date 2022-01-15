@@ -5,6 +5,7 @@ import bodyParser = require("body-parser");
 import routes from "./routes/routes";
 import { authenticateToken } from "./middleware/auth";
 import { logger } from "./logger";
+import Error from "./interfaces/error";
 
 const MONGO_URL =
   process.env.MONGO_URL || "mongodb://localhost:27017/simple-todo-backend";
@@ -34,7 +35,8 @@ app.use("/", routes);
 // Error handler should be the last middleware
 app.use(function (err: any, req: Request, res: Response, next: any) {
   logger.error(err);
-  res.sendStatus(500);
+  const error: Error = { code: 500, msg: "Internal Server Error" };
+  res.status(500).json(error);
 });
 
 app.listen(port, (): void =>

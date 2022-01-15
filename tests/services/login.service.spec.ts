@@ -3,6 +3,8 @@ import { login } from "../../src/services/login.service";
 import { assert } from "chai";
 import { User } from "../../src/models/user";
 import * as sinon from "sinon";
+import Error from "../../src/interfaces/error";
+import Token from "../../src/interfaces/token";
 
 let stub: any = null;
 
@@ -12,15 +14,15 @@ describe("login.service", () => {
       stub.restore();
     });
 
-    it("should return 404 when user is not on db", async () => {
+    it("should return 400 when user is not on db", async () => {
       stub = sinon.stub(User, "findOne").returns({
         exec: sinon.stub().returns(null),
       } as any);
-      const result = await login("", "");
-      assert.equal(result.code, 404);
+      const result = (await login("", "")) as Error;
+      assert.equal(result.code, 400);
     });
 
-    it("should return 404 when password is wrong", async () => {
+    it("should return 400 when password is wrong", async () => {
       stub = sinon.stub(User, "findOne").returns({
         exec: () => {
           return {
@@ -31,8 +33,8 @@ describe("login.service", () => {
         },
       } as any);
 
-      const result = await login("user", "wrongpassword");
-      assert.equal(result.code, 404);
+      const result = (await login("user", "wrongpassword")) as Error;
+      assert.equal(result.code, 400);
     });
 
     it("should return token if successful", async () => {
@@ -46,9 +48,8 @@ describe("login.service", () => {
         },
       } as any);
 
-      const result = await login("testuser", "testuser");
-      assert.equal(result.code, 200);
-      assert.isOk(result.token);
+      const token = (await login("testuser", "testuser")) as Token;
+      assert.isOk(token.token);
     });
   });
 });
