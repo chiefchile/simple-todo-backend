@@ -9,7 +9,7 @@
     "test": "mocha --require ts-node/register ./tests/*.ts ./tests/*/*.ts",
     "lint": "eslint src --ext ts",
     "tsc": "tsc",
-    "start": "nodemon -r source-map-support/register dist/app.js"
+    "start": "node -r source-map-support/register dist/app.js"
   },
   "author": "",
   "license": "ISC",
