@@ -9,7 +9,8 @@
     "test": "mocha --require ts-node/register ./tests/*.ts ./tests/*/*.ts",
     "lint": "eslint src --ext ts",
     "tsc": "tsc",
-    "start": "node -r source-map-support/register dist/app.js"
+    "start": "node -r source-map-support/register dist/app.js",
+	"it": "newman run simple-todo-backend.postman_collection.json"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.7",
+    "newman": "^5.3.1",
     "source-map-support": "^0.5.21",
     "winston": "^3.4.0"
   },
