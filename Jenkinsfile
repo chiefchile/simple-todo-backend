@@ -4,12 +4,13 @@ pipeline {
         stage("Build") {
             steps {
                 bat "npm install"
-                bat "start npm start"
+				bat "npm run build"
+				bat "start npm start"
             }
         }
         stage("Test") {
             steps {
-				bat "npm test"
+			    bat "npm test"
                 bat "npm run it -- --disable-unicode --color off"
             }
         }
