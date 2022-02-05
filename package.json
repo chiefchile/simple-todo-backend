@@ -10,7 +10,7 @@
     "lint": "eslint src --ext ts",
     "tsc": "tsc",
     "start": "node -r source-map-support/register dist/app.js",
-	"it": "newman run simple-todo-backend.postman_collection.json"
+	"it": "newman run ./tests/simple-todo-backend.postman_collection.json"
   },
   "author": "",
   "license": "ISC",
